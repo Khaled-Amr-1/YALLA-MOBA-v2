@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createUser = exports.isEmailExists = exports.findUserByEmailOrUsername = void 0;
-const db_1 = __importDefault(require("../config/db"));
+const db_1 = __importDefault(require("../../config/db"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const findUserByEmailOrUsername = (identifier) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield db_1.default.query("SELECT * FROM users WHERE email = $1 OR username = $1", [identifier]);
