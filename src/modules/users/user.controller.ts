@@ -6,7 +6,7 @@ import {
   createUser,
   findUserByEmailOrUsername,
   isEmailExists,
-} from "../services/user.service";
+} from "./user.service";
 
 dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET as string;
