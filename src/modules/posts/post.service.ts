@@ -118,3 +118,68 @@ export const updatePostService = async (
     },
   };
 };
+
+export const deleteComment = async (
+  userId: number,
+  postId: number,
+  commentId: number
+) => {
+  // Check if comment exists and belongs to user OR user owns the post
+  const commentCheck = await pool.query(
+    `SELECT c.user_id, p.user_id as post_owner_id
+     FROM comments c
+     JOIN posts p ON c.post_id = p.id
+     WHERE c.id = $1 AND c.post_id = $2`,
+    [commentId, postId]
+  );
+
+  if (commentCheck.rows.length === 0) {
+    throw new Error("Comment not found");
+  }
+
+  const { user_id: commentOwnerId, post_owner_id: postOwnerId } =
+    commentCheck.rows[0];
+
+  // Allow deletion if:
+  // 1. User is the comment owner, OR
+  // 2. User is the post owner
+  if (userId !== commentOwnerId && userId !== postOwnerId) {
+    throw new Error("Not authorized to delete this comment");
+  }
+
+  await pool.query("DELETE FROM comments WHERE id = $1", [commentId]);
+};
+
+export const likePost = async (userId: number, postId: number) => {
+  await pool.query(
+    "INSERT INTO likes (user_id, post_id) VALUES ($1, $2) ON CONFLICT DO NOTHING",
+    [userId, postId]
+  );
+};
+
+export const unlikePost = async (userId: number, postId: number) => {
+  await pool.query(
+    "DELETE FROM likes WHERE user_id = $1 AND post_id = $2",
+    [userId, postId]
+  );
+};
+
+export const addComment = async (userId: number, postId: number, content: string) => {
+  const result = await pool.query(
+    "INSERT INTO comments (user_id, post_id, content) VALUES ($1, $2, $3) RETURNING *",
+    [userId, postId, content]
+  );
+  return result.rows[0];
+};
+
+export const getComments = async (postId: number) => {
+  const result = await pool.query(
+    `SELECT c.*, u.username, u.avatar 
+     FROM comments c
+     JOIN users u ON c.user_id = u.id
+     WHERE c.post_id = $1
+     ORDER BY c.created_at DESC`,
+    [postId]
+  );
+  return result.rows;
+};

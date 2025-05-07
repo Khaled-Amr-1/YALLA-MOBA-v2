@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updatePostService = exports.deletePostService = exports.createPostService = void 0;
+exports.getComments = exports.addComment = exports.unlikePost = exports.likePost = exports.deleteComment = exports.updatePostService = exports.deletePostService = exports.createPostService = void 0;
 const db_1 = __importDefault(require("../../config/db"));
 const createPostService = (userId, body, files) => __awaiter(void 0, void 0, void 0, function* () {
     if (!body || body.trim().length === 0) {
@@ -85,3 +85,44 @@ const updatePostService = (userId, postId, body, files) => __awaiter(void 0, voi
     };
 });
 exports.updatePostService = updatePostService;
+const deleteComment = (userId, postId, commentId) => __awaiter(void 0, void 0, void 0, function* () {
+    // Check if comment exists and belongs to user OR user owns the post
+    const commentCheck = yield db_1.default.query(`SELECT c.user_id, p.user_id as post_owner_id
+     FROM comments c
+     JOIN posts p ON c.post_id = p.id
+     WHERE c.id = $1 AND c.post_id = $2`, [commentId, postId]);
+    if (commentCheck.rows.length === 0) {
+        throw new Error("Comment not found");
+    }
+    const { user_id: commentOwnerId, post_owner_id: postOwnerId } = commentCheck.rows[0];
+    // Allow deletion if:
+    // 1. User is the comment owner, OR
+    // 2. User is the post owner
+    if (userId !== commentOwnerId && userId !== postOwnerId) {
+        throw new Error("Not authorized to delete this comment");
+    }
+    yield db_1.default.query("DELETE FROM comments WHERE id = $1", [commentId]);
+});
+exports.deleteComment = deleteComment;
+const likePost = (userId, postId) => __awaiter(void 0, void 0, void 0, function* () {
+    yield db_1.default.query("INSERT INTO likes (user_id, post_id) VALUES ($1, $2) ON CONFLICT DO NOTHING", [userId, postId]);
+});
+exports.likePost = likePost;
+const unlikePost = (userId, postId) => __awaiter(void 0, void 0, void 0, function* () {
+    yield db_1.default.query("DELETE FROM likes WHERE user_id = $1 AND post_id = $2", [userId, postId]);
+});
+exports.unlikePost = unlikePost;
+const addComment = (userId, postId, content) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield db_1.default.query("INSERT INTO comments (user_id, post_id, content) VALUES ($1, $2, $3) RETURNING *", [userId, postId, content]);
+    return result.rows[0];
+});
+exports.addComment = addComment;
+const getComments = (postId) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield db_1.default.query(`SELECT c.*, u.username, u.avatar 
+     FROM comments c
+     JOIN users u ON c.user_id = u.id
+     WHERE c.post_id = $1
+     ORDER BY c.created_at DESC`, [postId]);
+    return result.rows;
+});
+exports.getComments = getComments;
