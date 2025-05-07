@@ -12,8 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUserWithPosts = void 0;
+exports.updateUserInfo = exports.isUsernameTaken = exports.getUserWithPosts = void 0;
 const db_1 = __importDefault(require("../../config/db"));
+// Used in GET profile
 const getUserWithPosts = (uid) => __awaiter(void 0, void 0, void 0, function* () {
     const userResult = yield db_1.default.query(`SELECT id, username, gender, role, avatar, uid, popularity FROM users WHERE uid = $1`, [uid]);
     if (userResult.rows.length === 0) {
@@ -25,3 +26,32 @@ const getUserWithPosts = (uid) => __awaiter(void 0, void 0, void 0, function* ()
     return { user, posts: postsResult.rows };
 });
 exports.getUserWithPosts = getUserWithPosts;
+// Used in PATCH profile
+const isUsernameTaken = (username, currentUserId) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const result = yield db_1.default.query(`SELECT 1 FROM users WHERE username = $1 AND id != $2`, [username, currentUserId]);
+    return ((_a = result.rowCount) !== null && _a !== void 0 ? _a : 0) > 0;
+});
+exports.isUsernameTaken = isUsernameTaken;
+const updateUserInfo = (userId, updates) => __awaiter(void 0, void 0, void 0, function* () {
+    const fields = [];
+    const values = [];
+    let index = 1;
+    if (updates.username) {
+        fields.push(`username = $${index++}`);
+        values.push(updates.username);
+    }
+    if (updates.avatar) {
+        fields.push(`avatar = $${index++}`);
+        values.push(updates.avatar);
+    }
+    if (updates.role) {
+        fields.push(`role = $${index++}`);
+        values.push(updates.role);
+    }
+    if (fields.length === 0)
+        return;
+    values.push(userId); // last param for WHERE clause
+    yield db_1.default.query(`UPDATE users SET ${fields.join(", ")} WHERE id = $${index}`, values);
+});
+exports.updateUserInfo = updateUserInfo;
