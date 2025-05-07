@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deletePostService = exports.createPostService = void 0;
+exports.updatePostService = exports.deletePostService = exports.createPostService = void 0;
 const db_1 = __importDefault(require("../../config/db"));
 const createPostService = (userId, body, files) => __awaiter(void 0, void 0, void 0, function* () {
     if (!body || body.trim().length === 0) {
@@ -57,3 +57,31 @@ const deletePostService = (userId, postId) => __awaiter(void 0, void 0, void 0, 
     };
 });
 exports.deletePostService = deletePostService;
+const updatePostService = (userId, postId, body, files) => __awaiter(void 0, void 0, void 0, function* () {
+    const postResult = yield db_1.default.query("SELECT * FROM posts WHERE id = $1", [postId]);
+    if (postResult.rows.length === 0) {
+        return {
+            status: 404,
+            data: { error: "Post not found" },
+        };
+    }
+    const post = postResult.rows[0];
+    if (post.user_id !== userId) {
+        return {
+            status: 403,
+            data: { error: "Not authorized to edit this post" },
+        };
+    }
+    const fileUrls = Array.isArray(files) && files.length > 0
+        ? files.map((file) => file.path)
+        : post.files; // Keep existing files if no new files uploaded
+    const updatedPost = yield db_1.default.query("UPDATE posts SET body = $1, files = $2, updated_at = NOW() WHERE id = $3 RETURNING id, user_id, body, files, created_at, updated_at", [body || post.body, fileUrls, postId]);
+    return {
+        status: 200,
+        data: {
+            message: "Post updated successfully",
+            updatedPost: updatedPost.rows[0],
+        },
+    };
+});
+exports.updatePostService = updatePostService;

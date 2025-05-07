@@ -45,7 +45,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deletePost = exports.createPost = void 0;
+exports.updatePost = exports.deletePost = exports.createPost = void 0;
 const postService = __importStar(require("./post.service"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -92,3 +92,25 @@ const deletePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.deletePost = deletePost;
+const updatePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const token = (_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(" ")[1];
+    if (!token) {
+        res.status(401).json({ error: "No token provided" });
+        return;
+    }
+    try {
+        const decoded = jsonwebtoken_1.default.verify(token, JWT_SECRET);
+        const userId = decoded.userId;
+        const postId = parseInt(req.params.id);
+        const { body } = req.body;
+        const files = req.files;
+        const result = yield postService.updatePostService(userId, postId, body, files);
+        res.status(result.status).json(result.data);
+    }
+    catch (error) {
+        console.error("Update Post Error:", error);
+        res.status(500).json({ error: "Internal server error: " + error.message });
+    }
+});
+exports.updatePost = updatePost;

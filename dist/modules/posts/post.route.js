@@ -2,8 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const post_controller_1 = require("./post.controller");
-const cloudinary_1 = require("../../utils/cloudinary"); // سننشئه بعد قليل
+const cloudinary_1 = require("../../utils/cloudinary");
+const post_controller_2 = require("./post.controller");
 const router = (0, express_1.Router)();
 router.post("/posts", cloudinary_1.upload.array("files", 10), post_controller_1.createPost);
 router.delete("/posts/:id", post_controller_1.deletePost);
+router.patch("/posts/:id", cloudinary_1.upload.array("files", 10), post_controller_2.updatePost);
 exports.default = router;
