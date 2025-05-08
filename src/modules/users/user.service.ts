@@ -42,3 +42,44 @@ export const createUser = async ({
   );
   return result.rows[0];
 };
+
+export const followUser = async (followerId: number, followingId: number) => {
+  if (followerId === followingId) throw new Error("Cannot follow yourself");
+
+  await pool.query(
+    `INSERT INTO follows (follower_id, following_id) 
+     VALUES ($1, $2) 
+     ON CONFLICT DO NOTHING`,
+    [followerId, followingId]
+  );
+};
+
+export const unfollowUser = async (followerId: number, followingId: number) => {
+  await pool.query(
+    `DELETE FROM follows 
+     WHERE follower_id = $1 AND following_id = $2`,
+    [followerId, followingId]
+  );
+};
+
+export const getFollowers = async (userId: number) => {
+  const result = await pool.query(
+    `SELECT u.id, u.username, u.avatar 
+     FROM follows f
+     JOIN users u ON f.follower_id = u.id
+     WHERE f.following_id = $1`,
+    [userId]
+  );
+  return result.rows;
+};
+
+export const getFollowing = async (userId: number) => {
+  const result = await pool.query(
+    `SELECT u.id, u.username, u.avatar 
+     FROM follows f
+     JOIN users u ON f.following_id = u.id
+     WHERE f.follower_id = $1`,
+    [userId]
+  );
+  return result.rows;
+};

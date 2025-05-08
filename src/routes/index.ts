@@ -8,6 +8,6 @@ const router = Router();
 
 router.use('/users', userRoutes);
 router.use('/profiles', profileRoutes);
-router.use(postRoutes);
+router.use('/posts',postRoutes);
 
 export default router;

@@ -7,6 +7,7 @@ import {
   findUserByEmailOrUsername,
   isEmailExists,
 } from "./user.service";
+import * as userService from "./user.service";
 
 dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET as string;
@@ -80,5 +81,63 @@ export const loginUser = async (
     });
   } catch (error) {
     next(error);
+  }
+};
+
+export const followUser = async (req: Request, res: Response) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) {
+    res.status(401).json({ error: "No token provided" });
+    return;
+  }
+  const { id: followingId } = req.params;
+  const decoded = jwt.verify(token, JWT_SECRET) as { userId: number };
+  const followerId = decoded.userId;
+
+  try {
+    await userService.followUser(+followerId, +followingId);
+    res.status(200).json({ message: "Followed successfully" });
+  } catch (error: any) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+export const unfollowUser = async (req: Request, res: Response) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) {
+    res.status(401).json({ error: "No token provided" });
+    return;
+  }
+  const { id: followingId } = req.params;
+    const decoded = jwt.verify(token, JWT_SECRET) as { userId: number };
+    const followerId = decoded.userId;
+
+  try {
+    await userService.unfollowUser(+followerId, +followingId);
+    res.status(200).json({ message: "Unfollowed successfully" });
+  } catch (error: any) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+export const getFollowers = async (req: Request, res: Response) => {
+
+  const { id: userId } = req.params;
+  try {
+    const followers = await userService.getFollowers(+userId);
+    res.status(200).json(followers);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const getFollowing = async (req: Request, res: Response) => {
+
+  const { id: userId } = req.params;
+  try {
+    const following = await userService.getFollowing(+userId);
+    res.status(200).json(following);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
   }
 };

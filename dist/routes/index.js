@@ -10,5 +10,5 @@ const post_route_1 = __importDefault(require("../modules/posts/post.route"));
 const router = (0, express_1.Router)();
 router.use('/users', user_route_1.default);
 router.use('/profiles', profile_route_1.default);
-router.use(post_route_1.default);
+router.use('/posts', post_route_1.default);
 exports.default = router;

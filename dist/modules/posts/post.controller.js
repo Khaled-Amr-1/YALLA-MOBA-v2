@@ -45,14 +45,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getComments = exports.addComment = exports.unlikePost = exports.likePost = exports.deleteComment = exports.updatePost = exports.deletePost = exports.createPost = void 0;
+exports.getFeedPosts = exports.getHomePosts = exports.getComments = exports.addComment = exports.unlikePost = exports.likePost = exports.deleteComment = exports.updatePost = exports.deletePost = exports.createPost = void 0;
 const postService = __importStar(require("./post.service"));
+const post_service_1 = require("./post.service");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const JWT_SECRET = process.env.JWT_SECRET;
 const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const token = (_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(" ")[1];
-    //   if (!token) return res.status(401).json({ error: "No token provided" });
     if (!token) {
         res.status(401).json({ error: "No token provided" });
         return;
@@ -212,3 +212,31 @@ const getComments = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.getComments = getComments;
+const getHomePosts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const posts = yield (0, post_service_1.getHomePostsService)();
+        res.status(200).json(posts);
+    }
+    catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+exports.getHomePosts = getHomePosts;
+const getFeedPosts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const token = (_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(" ")[1];
+    if (!token) {
+        res.status(401).json({ error: "No token provided" });
+        return;
+    }
+    try {
+        const decoded = jsonwebtoken_1.default.verify(token, JWT_SECRET);
+        const userId = decoded.userId;
+        const posts = yield (0, post_service_1.getFeedPostsService)(userId);
+        res.status(200).json(posts);
+    }
+    catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+exports.getFeedPosts = getFeedPosts;

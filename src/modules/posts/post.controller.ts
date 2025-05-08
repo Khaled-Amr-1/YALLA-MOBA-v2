@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 import * as postService from "./post.service";
+import { getHomePostsService, getFeedPostsService } from "./post.service";
 import jwt from "jsonwebtoken";
 const JWT_SECRET = process.env.JWT_SECRET as string;
 
 export const createPost = async (req: Request, res: Response) => {
   const token = req.headers.authorization?.split(" ")[1];
-  //   if (!token) return res.status(401).json({ error: "No token provided" });
   if (!token) {
     res.status(401).json({ error: "No token provided" });
     return;
@@ -163,5 +163,30 @@ export const getComments = async (req: Request, res: Response) => {
     res.status(200).json(comments);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch comments" });
+  }
+};
+
+export const getHomePosts = async (req: Request, res: Response) => {
+  try {
+    const posts = await getHomePostsService();
+    res.status(200).json(posts);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const getFeedPosts = async (req: Request, res: Response) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) {
+    res.status(401).json({ error: "No token provided" });
+    return;
+  }
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET) as { userId: number };
+    const userId = decoded.userId;
+    const posts = await getFeedPostsService(userId);
+    res.status(200).json(posts);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
   }
 };

@@ -9,14 +9,20 @@ const post_controller_3 = require("./post.controller");
 const post_controller_4 = require("./post.controller");
 const post_controller_5 = require("./post.controller");
 const post_controller_6 = require("./post.controller");
+const post_controller_7 = require("./post.controller");
+const post_controller_8 = require("./post.controller");
 const router = (0, express_1.Router)();
-router.post("/posts", authenticateToken_1.authenticateToken, cloudinary_1.upload.array("files", 10), post_controller_1.createPost);
-router.delete("/posts/:id", authenticateToken_1.authenticateToken, post_controller_1.deletePost);
+router.post("/", authenticateToken_1.authenticateToken, cloudinary_1.upload.array("files", 10), post_controller_1.createPost);
+router.delete("/:id", authenticateToken_1.authenticateToken, post_controller_1.deletePost);
 // router.patch("/posts/:id", upload.array("files", 10), updatePost);
-router.patch("/posts/:id", authenticateToken_1.authenticateToken, cloudinary_1.upload.array("files", 10), post_controller_2.updatePost);
-router.post("/posts/:id/like", authenticateToken_1.authenticateToken, post_controller_3.likePost);
-router.delete("/posts/:id/like", authenticateToken_1.authenticateToken, post_controller_3.unlikePost);
-router.post("/posts/:id/comments", authenticateToken_1.authenticateToken, post_controller_5.addComment);
-router.get("/posts/:id/comments", post_controller_4.getComments);
-router.delete("/posts/:postId/comments/:commentId", authenticateToken_1.authenticateToken, post_controller_6.deleteComment);
+router.patch("/:id", authenticateToken_1.authenticateToken, cloudinary_1.upload.array("files", 10), post_controller_2.updatePost);
+router.post("/:id/like", authenticateToken_1.authenticateToken, post_controller_3.likePost);
+router.delete("/:id/like", authenticateToken_1.authenticateToken, post_controller_3.unlikePost);
+router.post("/:id/comments", authenticateToken_1.authenticateToken, post_controller_5.addComment);
+router.get("/:id/comments", authenticateToken_1.authenticateToken, post_controller_4.getComments);
+router.delete("/:postId/comments/:commentId", authenticateToken_1.authenticateToken, post_controller_6.deleteComment);
+// Public endpoint (no auth required)
+router.get("/home", post_controller_7.getHomePosts);
+// Private endpoint (requires auth)
+router.get("/feed", authenticateToken_1.authenticateToken, post_controller_8.getFeedPosts);
 exports.default = router;

@@ -183,3 +183,50 @@ export const getComments = async (postId: number) => {
   );
   return result.rows;
 };
+
+export const getHomePostsService = async () => {
+  try {
+    const result = await pool.query(`
+      SELECT 
+        p.*,
+        u.username,
+        u.avatar,
+        COUNT(l.id) AS likeCount,
+        COUNT(c.id) AS commentCount
+      FROM posts p
+      JOIN users u ON p.user_id = u.id
+      LEFT JOIN likes l ON p.id = l.post_id
+      LEFT JOIN comments c ON p.id = c.post_id
+      GROUP BY p.id, u.id
+      ORDER BY p.created_at DESC
+    `);
+    return result.rows;
+  } catch (error) {
+    throw new Error("Failed to fetch home posts");
+  }
+};
+
+export const getFeedPostsService = async (userId: number) => {
+  try {
+    const result = await pool.query(`
+      SELECT 
+        p.*,
+        u.username,
+        u.avatar,
+        COUNT(l.id) AS likeCount,
+        COUNT(c.id) AS commentCount
+      FROM posts p
+      JOIN users u ON p.user_id = u.id
+      LEFT JOIN likes l ON p.id = l.post_id
+      LEFT JOIN comments c ON p.id = c.post_id
+      WHERE p.user_id IN (
+        SELECT following_id FROM follows WHERE follower_id = $1
+      )
+      GROUP BY p.id, u.id
+      ORDER BY p.created_at DESC
+    `, [userId]);
+    return result.rows;
+  } catch (error) {
+    throw new Error("Failed to fetch feed posts");
+  }
+};

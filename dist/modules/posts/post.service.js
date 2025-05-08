@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getComments = exports.addComment = exports.unlikePost = exports.likePost = exports.deleteComment = exports.updatePostService = exports.deletePostService = exports.createPostService = void 0;
+exports.getFeedPostsService = exports.getHomePostsService = exports.getComments = exports.addComment = exports.unlikePost = exports.likePost = exports.deleteComment = exports.updatePostService = exports.deletePostService = exports.createPostService = void 0;
 const db_1 = __importDefault(require("../../config/db"));
 const createPostService = (userId, body, files) => __awaiter(void 0, void 0, void 0, function* () {
     if (!body || body.trim().length === 0) {
@@ -126,3 +126,52 @@ const getComments = (postId) => __awaiter(void 0, void 0, void 0, function* () {
     return result.rows;
 });
 exports.getComments = getComments;
+const getHomePostsService = () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield db_1.default.query(`
+      SELECT 
+        p.*,
+        u.username,
+        u.avatar,
+        COUNT(l.id) AS likeCount,
+        COUNT(c.id) AS commentCount
+      FROM posts p
+      JOIN users u ON p.user_id = u.id
+      LEFT JOIN likes l ON p.id = l.post_id
+      LEFT JOIN comments c ON p.id = c.post_id
+      GROUP BY p.id, u.id
+      ORDER BY p.created_at DESC
+    `);
+        return result.rows;
+    }
+    catch (error) {
+        throw new Error("Failed to fetch home posts");
+    }
+});
+exports.getHomePostsService = getHomePostsService;
+const getFeedPostsService = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield db_1.default.query(`
+      SELECT 
+        p.*,
+        u.username,
+        u.avatar,
+        COUNT(l.id) AS likeCount,
+        COUNT(c.id) AS commentCount
+      FROM posts p
+      JOIN users u ON p.user_id = u.id
+      LEFT JOIN likes l ON p.id = l.post_id
+      LEFT JOIN comments c ON p.id = c.post_id
+      WHERE p.user_id IN (
+        SELECT following_id FROM follows WHERE follower_id = $1
+      )
+      GROUP BY p.id, u.id
+      ORDER BY p.created_at DESC
+    `, [userId]);
+        return result.rows;
+    }
+    catch (error) {
+        throw new Error("Failed to fetch feed posts");
+    }
+});
+exports.getFeedPostsService = getFeedPostsService;
