@@ -25,6 +25,7 @@ router.patch(
 router.post("/:id/like", authenticateToken, likePost);
 router.delete("/:id/like", authenticateToken, unlikePost);
 
+// *************************************************
 router.post("/:id/comments", authenticateToken, addComment);
 router.get("/:id/comments", authenticateToken, getComments);
 router.delete(
