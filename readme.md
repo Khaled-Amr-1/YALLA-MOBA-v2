@@ -1,7 +1,7 @@
 # 📘 YALLA MOBA API
 
 ## 🌐 Base URL
-`https://your-api-domain.com/api/`
+`https://yalla-moba-v2.vercel.app/api/`
 
 ### users
 post
