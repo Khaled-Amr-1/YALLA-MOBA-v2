@@ -5,7 +5,11 @@ import postRoutes from "../modules/posts/post.route";
 
 const router = Router();
 
-
+router.use('/', (req, res) => {
+  res.status(200).json({
+    message: 'Welcome to the API',
+  });
+});
 router.use('/users', userRoutes);
 router.use('/profiles', profileRoutes);
 router.use('/posts',postRoutes);
