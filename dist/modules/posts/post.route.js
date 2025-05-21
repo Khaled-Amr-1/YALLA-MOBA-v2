@@ -18,6 +18,7 @@ router.delete("/:id", authenticateToken_1.authenticateToken, post_controller_1.d
 router.patch("/:id", authenticateToken_1.authenticateToken, cloudinary_1.upload.array("files", 10), post_controller_2.updatePost);
 router.post("/:id/like", authenticateToken_1.authenticateToken, post_controller_3.likePost);
 router.delete("/:id/like", authenticateToken_1.authenticateToken, post_controller_3.unlikePost);
+// *************************************************
 router.post("/:id/comments", authenticateToken_1.authenticateToken, post_controller_5.addComment);
 router.get("/:id/comments", authenticateToken_1.authenticateToken, post_controller_4.getComments);
 router.delete("/:postId/comments/:commentId", authenticateToken_1.authenticateToken, post_controller_6.deleteComment);
