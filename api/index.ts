@@ -1,13 +1,13 @@
-// api/index.ts
-import express from 'express';
-import serverless from 'serverless-http';
+import { VercelRequest, VercelResponse } from '@vercel/node';
+import app from '../src/app';
+import { createServer, IncomingMessage, ServerResponse } from 'http';
 
-const app = express();
-app.use(express.json());
-
-// Register route
-app.post('/users/register', (req, res) => {
-  res.status(200).json({ message: "User registered!" });
+const server = createServer((req: IncomingMessage, res: ServerResponse) => {
+  app(req, res);
 });
 
-export default serverless(app);
+server.listen();
+
+export default function handler(req: VercelRequest, res: VercelResponse) {
+  server.emit('request', req, res);
+}
