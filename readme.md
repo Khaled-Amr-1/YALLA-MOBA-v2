@@ -88,13 +88,36 @@ Logs in a user.
 **POST / DELETE** `/users/:id/follow/`  
 Follow or unfollow a user by their ID.
 
+POST 
+send the id of the user you want to follow in the url :id/
+you will get 
+
+res
+{
+    "message": "Followed successfully"
+}
+
+DELETE
+res
+{
+    "message": "Unfollowed successfully"
+}
 ---
 
 ### 👥 Get User Followers
 
 **GET** `/users/:id/followers/`  
 Returns the list of users following the specified user.
+this :id in the request is the user i want to know his followers
 
+res
+[
+    {
+        "id": 1,
+        "username": "khaled",
+        "avatar": "https://imgs.search.brave.com/wWDObZCjNHTw-EtXI6tQUi8nOURSn0HT1OTy3Z_MIbM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL00v/TVY1QlpERmhZelZq/WmpndFlUbGtaQzAw/WW1RMExXRmhObU10/TTJFd05EUmxabVpp/WW1GbVhrRXlYa0Zx/Y0djQC5qcGc"
+    }
+]
 ---
 
 ### 👤 Get User Following
@@ -102,6 +125,14 @@ Returns the list of users following the specified user.
 **GET** `/users/:id/following/`  
 Returns the list of users that the specified user is following.
 
+res
+[
+    {
+        "id": 2,
+        "username": "sasa123",
+        "avatar": "https://example.com/avatar.jpg"
+    }
+]
 ---
 
 ## 🧑‍💼 Profiles
