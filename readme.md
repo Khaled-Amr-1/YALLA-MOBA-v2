@@ -25,7 +25,7 @@ Registers a new user.
   "role": "MM",
   "password": "testingpassword",
   "repassword": "testingpassword",
-  "avatar": "https://imgs.search.brave.com/cxzXrryKS-68CHXM_H3EaV5rw9L3qbwTg3SvRyNhj-E/rs:fit:500:0:0:0/g:ce/..."
+  "avatar": "https://example.com/avatar.jpg"
 }
 ```
 
@@ -39,7 +39,7 @@ Registers a new user.
     "email": "testing@gmail.com",
     "gender": "Male",
     "role": "MM",
-    "avatar": "https://imgs.search.brave.com/...",
+    "avatar": "https://example.com/avatar.jpg",
     "UID": "1000066",
     "popularity": "0"
   }
@@ -74,7 +74,7 @@ Logs in a user.
     "email": "testing@gmail.com",
     "gender": "Male",
     "role": "MM",
-    "avatar": "https://imgs.search.brave.com/...",
+    "avatar": "https://example.com/avatar.jpg",
     "UID": "1000066",
     "popularity": "0"
   }
@@ -115,7 +115,7 @@ res
     {
         "id": 1,
         "username": "khaled",
-        "avatar": "https://imgs.search.brave.com/wWDObZCjNHTw-EtXI6tQUi8nOURSn0HT1OTy3Z_MIbM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL00v/TVY1QlpERmhZelZq/WmpndFlUbGtaQzAw/WW1RMExXRmhObU10/TTJFd05EUmxabVpp/WW1GbVhrRXlYa0Zx/Y0djQC5qcGc"
+        "avatar": "https://example.com/avatar.jpg"
     }
 ]
 ---
@@ -148,7 +148,7 @@ res
         "username": "khaled",
         "gender": "Male",
         "role": "MM",
-        "avatar": "https://imgs.search.brave.com/wWDObZCjNHTw-EtXI6tQUi8nOURSn0HT1OTy3Z_MIbM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL00v/TVY1QlpERmhZelZq/WmpndFlUbGtaQzAw/WW1RMExXRmhObU10/TTJFd05EUmxabVpp/WW1GbVhrRXlYa0Zx/Y0djQC5qcGc",
+        "avatar": "https://example.com/avatar.jpg",
         "uid": "1000001",
         "popularity": "0"
     },
