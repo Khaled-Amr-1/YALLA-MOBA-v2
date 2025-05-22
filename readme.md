@@ -88,29 +88,31 @@ Logs in a user.
 **POST / DELETE** `/users/:id/follow/`  
 Follow or unfollow a user by their ID.
 
-POST 
-send the id of the user you want to follow in the url :id/
-you will get 
+#### POST Response
 
-res
+```json
 {
-    "message": "Followed successfully"
+  "message": "Followed successfully"
 }
+```
 
-DELETE
-res
+#### DELETE Response
+
+```json
 {
-    "message": "Unfollowed successfully"
+  "message": "Unfollowed successfully"
 }
+```
+
 ---
-
 ### 👥 Get User Followers
 
 **GET** `/users/:id/followers/`  
 Returns the list of users following the specified user.
 this :id in the request is the user i want to know his followers
 
-res
+#### GET Response
+```json
 [
     {
         "id": 1,
@@ -118,6 +120,8 @@ res
         "avatar": "https://example.com/avatar.jpg"
     }
 ]
+```
+
 ---
 
 ### 👤 Get User Following
@@ -125,7 +129,8 @@ res
 **GET** `/users/:id/following/`  
 Returns the list of users that the specified user is following.
 
-res
+#### GET Response
+```json
 [
     {
         "id": 2,
@@ -133,6 +138,8 @@ res
         "avatar": "https://example.com/avatar.jpg"
     }
 ]
+```
+
 ---
 
 ## 🧑‍💼 Profiles
@@ -142,7 +149,8 @@ res
 **GET** `/profiles/:uid/`  
 Fetch profile data by user UID.
 
-res
+#### GET Response
+```json
 {
     "ownerData": {
         "username": "khaled",
@@ -178,6 +186,7 @@ res
         }
     ]
 }
+```
 
 ---
 
@@ -186,17 +195,22 @@ res
 **PATCH** `/profiles/`  
 Update the current user’s profile (authentication required).
 
-req
+#### Request Body
+```json
 {
     "username": "",
     "avatar": "",
     "role":""
 }
+```
 
-res
+#### PATCH Response
+
+```json
 {
     "message": "Profile updated successfully"
 }
+```
 ---
 
 ## 📝 Posts
