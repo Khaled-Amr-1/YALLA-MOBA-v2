@@ -41,6 +41,7 @@ export const registerUser = async (
         avatar: user.avatar,
         UID: user.uid,
         popularity: user.popularity,
+        suspended: user.suspended,
       },
     });
   } catch (error) {

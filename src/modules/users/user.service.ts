@@ -37,7 +37,7 @@ export const createUser = async ({
   const result = await pool.query(
     `INSERT INTO users (username, email, password, gender, role, avatar)
      VALUES ($1, $2, $3, $4, $5, $6)
-     RETURNING id, username, email, gender, role, avatar, uid, mobacoin, popularity`,
+     RETURNING id, username, email, gender, role, avatar, uid, mobacoin, popularity, suspended`,
     [username, email, hashedPassword, gender, role, avatar]
   );
   return result.rows[0];
