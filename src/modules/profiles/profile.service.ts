@@ -64,3 +64,49 @@ export const updateUserInfo = async (
     values
   );
 };
+
+interface SearchResult {
+  users: Array<{
+    id: number;
+    username: string;
+    avatar: string | null;
+    uid: string;
+  }>;
+  total: number;
+}
+
+export const getsearchUser = async (
+  query: string, 
+  page: number = 1, 
+  limit: number = 10
+): Promise<SearchResult> => {
+  try {
+    // Calculate offset for pagination
+    const offset = (page - 1) * limit;
+
+    // Get users with pagination
+    const result = await pool.query(
+      `SELECT id, username, avatar, uid 
+       FROM users 
+       WHERE LOWER(username) LIKE LOWER($1) 
+       LIMIT $2 OFFSET $3`,
+      [`%${query}%`, limit, offset]
+    );
+
+    // Get total count for pagination
+    const countResult = await pool.query(
+      `SELECT COUNT(*) 
+       FROM users 
+       WHERE LOWER(username) LIKE LOWER($1)`,
+      [`%${query}%`]
+    );
+
+    return {
+      users: result.rows,
+      total: parseInt(countResult.rows[0].count)
+    };
+  } catch (error) {
+    console.error("Database Search Error:", error);
+    throw new Error("Failed to search users");
+  }
+};

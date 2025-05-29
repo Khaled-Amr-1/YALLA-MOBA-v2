@@ -4,6 +4,28 @@ import {
   updateUserInfo,
   isUsernameTaken,
 } from "./profile.service";
+import { getsearchUser } from "./profile.service"; // Assuming this is the correct import path
+
+export const searchUser = async(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    // Change from req.body to req.query since this is a search operation
+    const { name } = req.query;
+
+    if (!name || typeof name !== 'string') {
+      res.status(400).json({ error: "Invalid search query" });
+      return;
+    }
+
+    const users = await getsearchUser(name);
+    res.status(200).json({ users });
+  } catch (error) {
+    next(error);
+  }
+};
 
 export const getUserProfile = async (
   req: Request,
