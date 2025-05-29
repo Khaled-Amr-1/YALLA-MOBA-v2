@@ -225,6 +225,25 @@ Update the current user’s profile (authentication required).
 **POST** `/posts/`  
 Create a new post.
 
+{
+    "message": "Post created successfully",
+    "ownerData": {
+        "username": "testuser12",
+        "avatar": "https://google.com/avatr.com",
+        "uid": "1000069"
+    },
+    "newPost": {
+        "id": 139,
+        "user_id": 69,
+        "body": "hi",
+        "files": [
+            "https://res.cloudinary.com/dqtn6fmjs/image/upload/v1748521806/posts/ftnwwcp6gtspgdldacgd.jpg"
+        ],
+        "created_at": "2025-05-29T12:30:07.102Z",
+        "updated_at": "2025-05-29T12:30:07.102Z"
+    }
+}
+
 ---
 
 ### ❌ Delete a Post

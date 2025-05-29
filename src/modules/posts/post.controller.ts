@@ -17,8 +17,11 @@ export const createPost = async (req: Request, res: Response) => {
 
     const { body } = req.body;
     const files = req.files;
-
-    const result = await postService.createPostService(userId, body, files);
+    if(!files){
+      res.json({ error: "No files uploaded" });
+      return;
+    }
+    const result = await postService.createPostService(userId, files, body);
     res.status(201).json(result);
   } catch (error: any) {
     console.error("Create Post Error:", error);

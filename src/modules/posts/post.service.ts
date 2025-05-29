@@ -6,12 +6,10 @@ interface FileType {
 
 export const createPostService = async (
   userId: number,
-  body: string,
-  files: any
+  files: any,
+  body?: string
+
 ) => {
-  if (!body || body.trim().length === 0) {
-    throw new Error("Body field is required");
-  }
 
   const fileUrls =
     Array.isArray(files) && files.length > 0
@@ -30,8 +28,8 @@ export const createPostService = async (
   const ownerData = userResult.rows[0];
 
   const insertResult = await pool.query(
-    "INSERT INTO posts (user_id, body, files) VALUES ($1, $2, $3) RETURNING id, user_id, body, files, created_at, updated_at",
-    [userId, body, fileUrls]
+    "INSERT INTO posts (user_id, body, files) VALUES ($1, COALESCE($2, ''), $3) RETURNING id, user_id, body, files, created_at, updated_at",
+    [userId, body || null, fileUrls]
   );
 
   const newPost = insertResult.rows[0];
