@@ -14,7 +14,7 @@ export const getUserWithPosts = async (uid: number) => {
   const user = userResult.rows[0];
 
   const postsResult = await pool.query(
-    `SELECT id, body, files, created_at, updated_at FROM posts WHERE user_id = $1 ORDER BY created_at DESC`,
+    `SELECT id, body, files, created_at, updated_at, likecount, commentcount FROM posts WHERE user_id = $1 ORDER BY created_at DESC`,
     [user.id]
   );
 
