@@ -12,17 +12,20 @@ export const searchUser = async(
   next: NextFunction
 ) => {
   try {
-    const { name } = req.query;
+    const { name } = req.body;  // Get name from request body
 
     if (!name || typeof name !== 'string') {
-      res.status(400).json({ error: "Please provide a valid name to search" });
-      return;
+      res.status(400).json({ 
+        error: "Please provide a valid name to search" 
+      });
+      return ;
     }
 
     const { users } = await getsearchUser(name.trim());
     res.status(200).json(users);
-    return;
+    return; 
   } catch (error) {
+    console.error("Search error:", error);
     next(error);
   }
 };
