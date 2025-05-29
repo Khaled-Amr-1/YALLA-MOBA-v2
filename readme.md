@@ -148,6 +148,42 @@ Returns the list of users that the specified user is following.
 
 ### 📄 Get Profile
 
+### search Profile
+request 
+/profiles/search/
+body 
+#### POST Request 
+```json
+{
+  "name":"khaled"
+}
+```
+
+#### POST Responce
+
+```json
+[
+    {
+        "id": 4,
+        "username": "khaledamr",
+        "avatar": "avatarurl",
+        "uid": "1000004"
+    },
+    {
+        "id": 7,
+        "username": "khaledamr1",
+        "avatar": "avatarurl",
+        "uid": "1000007"
+    },
+    {
+        "id": 1,
+        "username": "khaled",
+        "avatar": "https://imgs.search.brave.com/wWDObZCjNHTw-EtXI6tQUi8nOURSn0HT1OTy3Z_MIbM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL00v/TVY1QlpERmhZelZq/WmpndFlUbGtaQzAw/WW1RMExXRmhObU10/TTJFd05EUmxabVpp/WW1GbVhrRXlYa0Zx/Y0djQC5qcGc",
+        "uid": "1000001"
+    }
+]
+```
+
 **GET** `/profiles/:uid/`  
 Fetch profile data by user UID.
 
