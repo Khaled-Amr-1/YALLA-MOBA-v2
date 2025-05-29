@@ -42,7 +42,9 @@ Registers a new user.
     "avatar": "https://example.com/avatar.jpg",
     "UID": "1000066",
     "popularity": "0",
-    "suspended":false
+    "suspended":false,
+    "followingcount": 0,
+    "followerscount": 0
   }
 }
 ```
@@ -78,7 +80,9 @@ Logs in a user.
     "avatar": "https://example.com/avatar.jpg",
     "UID": "1000066",
     "popularity": "0",
-    "suspended":false
+    "suspended":false,
+    "followingcount": 0,
+    "followerscount": 0
   }
 }
 ```
