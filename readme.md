@@ -224,7 +224,15 @@ Update the current user’s profile (authentication required).
 
 **POST** `/posts/`  
 Create a new post.
+#### Request Body
+```json
+"body":"",
+"files":""
+```
 
+#### POST Response
+
+```json
 {
     "message": "Post created successfully",
     "ownerData": {
@@ -233,16 +241,17 @@ Create a new post.
         "uid": "1000069"
     },
     "newPost": {
-        "id": 139,
+        "id": 145,
         "user_id": 69,
-        "body": "hi",
+        "body": "",
         "files": [
-            "https://res.cloudinary.com/dqtn6fmjs/image/upload/v1748521806/posts/ftnwwcp6gtspgdldacgd.jpg"
+            "https://res.cloudinary.com/dqtn6fmjs/image/upload/v1748523233/posts/tzckxdn0uvdvxd4rwvgm.png"
         ],
-        "created_at": "2025-05-29T12:30:07.102Z",
-        "updated_at": "2025-05-29T12:30:07.102Z"
+        "created_at": "2025-05-29T12:53:54.986Z",
+        "updated_at": "2025-05-29T12:53:54.986Z"
     }
 }
+```
 
 ---
 
