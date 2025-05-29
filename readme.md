@@ -158,7 +158,7 @@ Fetch profile data by user UID.
         "username": "khaled",
         "gender": "Male",
         "role": "MM",
-        "avatar": "https://example.com/avatar.jpg",
+        "avatar": "https://imgs.search.brave.com/wWDObZCjNHTw-EtXI6tQUi8nOURSn0HT1OTy3Z_MIbM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL00v/TVY1QlpERmhZelZq/WmpndFlUbGtaQzAw/WW1RMExXRmhObU10/TTJFd05EUmxabVpp/WW1GbVhrRXlYa0Zx/Y0djQC5qcGc",
         "uid": "1000001",
         "popularity": "0",
         "suspended": false,
@@ -167,28 +167,25 @@ Fetch profile data by user UID.
     },
     "ownerPosts": [
         {
-            "id": 80,
-            "body": "asdfghjkl",
-            "files": [
-                "https://res.cloudinary.com/dqtn6fmjs/image/upload/v1746653815/posts/uvxmqdkf1asvyowf3ypk.png"
-            ],
-            "created_at": "2025-05-07T20:17:10.502Z",
-            "updated_at": "2025-05-07T23:58:39.756Z"
-        },
-        {
-            "id": 52,
-            "body": "heli",
+            "id": 138,
+            "body": "[{\"fieldname\":\"files\",\"originalname\":\"Khaled Amr - Backend Developer-images-0.jpg\",\"encoding\":\"7bit\",\"mimetype\":\"image/jpeg\",\"path\":\"https://res.cloudinary.com/dqtn6fmjs/image/upload/v1748519613/posts/ckuypwo4d2jy7aq6hcyr.jpg\",\"size\":544152,\"filename\":\"posts/ckuypwo4d2jy7aq6hcyr\"}]",
             "files": [],
-            "created_at": "2025-05-05T11:08:40.520Z",
-            "updated_at": "2025-05-07T23:58:39.756Z"
+            "created_at": "2025-05-29T11:53:34.822Z",
+            "updated_at": "2025-05-29T11:53:34.822Z",
+            "likecount": 0,
+            "commentcount": 0
         },
         {
-            "id": 5,
-            "body": "khaled post 3",
-            "files": null,
-            "created_at": "2025-05-01T12:59:02.597Z",
-            "updated_at": "2025-05-07T23:58:39.756Z"
-        }
+            "id": 136,
+            "body": "hi",
+            "files": [
+                "https://res.cloudinary.com/dqtn6fmjs/image/upload/v1748519026/posts/l9v0lvauzkigoom5i5gg.jpg"
+            ],
+            "created_at": "2025-05-29T11:43:47.690Z",
+            "updated_at": "2025-05-29T11:43:47.690Z",
+            "likecount": 0,
+            "commentcount": 0
+        },
     ]
 }
 ```
