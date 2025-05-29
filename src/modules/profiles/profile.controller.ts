@@ -12,16 +12,16 @@ export const searchUser = async(
   next: NextFunction
 ) => {
   try {
-    // Change from req.body to req.query since this is a search operation
     const { name } = req.query;
 
     if (!name || typeof name !== 'string') {
-      res.status(400).json({ error: "Invalid search query" });
+      res.status(400).json({ error: "Please provide a valid name to search" });
       return;
     }
 
-    const users = await getsearchUser(name);
-    res.status(200).json({ users });
+    const { users } = await getsearchUser(name.trim());
+    res.status(200).json(users);
+    return;
   } catch (error) {
     next(error);
   }
