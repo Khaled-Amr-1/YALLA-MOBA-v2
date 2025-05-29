@@ -42,6 +42,8 @@ export const registerUser = async (
         UID: user.uid,
         popularity: user.popularity,
         suspended: user.suspended,
+        followingcount: user.followingcount,
+        followerscount: user.followerscount,
       },
     });
   } catch (error) {
@@ -78,6 +80,9 @@ export const loginUser = async (
         avatar: user.avatar,
         UID: user.uid,
         popularity: user.popularity,
+        suspended: user.suspended,
+        followingcount: user.followingcount,
+        followerscount: user.followerscount,
       },
     });
   } catch (error) {
