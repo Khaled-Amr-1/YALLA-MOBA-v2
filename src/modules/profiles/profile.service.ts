@@ -3,7 +3,7 @@ import pool from "../../config/db";
 // Used in GET profile
 export const getUserWithPosts = async (uid: number) => {
   const userResult = await pool.query(
-    `SELECT id, username, gender, role, avatar, uid, popularity FROM users WHERE uid = $1`,
+    `SELECT id, username, gender, role, avatar, uid, popularity , suspended, followingcount, followerscount FROM users WHERE uid = $1`,
     [uid]
   );
 
