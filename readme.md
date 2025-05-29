@@ -149,9 +149,8 @@ Returns the list of users that the specified user is following.
 ### 📄 Get Profile
 
 ### search Profile
-request 
-/profiles/search/
-body 
+**POST** `/profiles/search/`
+ 
 #### POST Request 
 ```json
 {
