@@ -41,7 +41,8 @@ Registers a new user.
     "role": "MM",
     "avatar": "https://example.com/avatar.jpg",
     "UID": "1000066",
-    "popularity": "0"
+    "popularity": "0",
+    "suspended":false
   }
 }
 ```
@@ -76,7 +77,8 @@ Logs in a user.
     "role": "MM",
     "avatar": "https://example.com/avatar.jpg",
     "UID": "1000066",
-    "popularity": "0"
+    "popularity": "0",
+    "suspended":false
   }
 }
 ```
@@ -158,7 +160,10 @@ Fetch profile data by user UID.
         "role": "MM",
         "avatar": "https://example.com/avatar.jpg",
         "uid": "1000001",
-        "popularity": "0"
+        "popularity": "0",
+        "suspended": false,
+        "followingcount": 1,
+        "followerscount": 0
     },
     "ownerPosts": [
         {
