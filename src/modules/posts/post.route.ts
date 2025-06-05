@@ -35,7 +35,7 @@ router.delete(
 );
 
 // Public endpoint (no auth required)
-router.get("/home", getHomePosts);
+router.get("/home",authenticateToken, getHomePosts);
 
 // Private endpoint (requires auth)
 router.get("/feed", authenticateToken, getFeedPosts);

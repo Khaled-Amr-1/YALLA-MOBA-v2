@@ -389,3 +389,48 @@ page is the page you want and page size how many posts will you get in the respo
 
 **GET** `/posts/feed/`  
 Get the personalized feed based on user’s following.
+
+same as home
+
+#### GET Response 
+
+```json
+{
+    [
+        {
+            "id": 130,
+            "user_id": 3,
+            "body": "وبز",
+            "files": [
+                "https://res.cloudinary.com/dqtn6fmjs/image/upload/v1748500110/posts/njpoccdoik534gpupvwf.jpg"
+            ],
+            "created_at": "2025-05-29T06:28:31.897Z",
+            "updated_at": "2025-05-29T06:28:31.897Z",
+            "likecount": "0",
+            "commentcount": "0",
+            "likedbyuser": false,
+            "username": "Hookxx",
+            "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1mGcwK1Doj36_tYvBW0rHUoTk_EBZ4IQWHg&s"
+        },
+        {
+            "id": 129,
+            "user_id": 3,
+            "body": "ؤتين",
+            "files": [
+                "https://res.cloudinary.com/dqtn6fmjs/image/upload/v1748499989/posts/drhdl2fpgrceckgscdyy.jpg"
+            ],
+            "created_at": "2025-05-29T06:26:30.650Z",
+            "updated_at": "2025-05-29T06:26:30.650Z",
+            "likecount": "0",
+            "commentcount": "0",
+            "likedbyuser": false,
+            "username": "Hookxx",
+            "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1mGcwK1Doj36_tYvBW0rHUoTk_EBZ4IQWHg&s"
+        }
+    ],
+    "total": 42,
+    "totalPages": 5,
+    "currentPage": 1,
+    "pageSize": 10
+}
+```
