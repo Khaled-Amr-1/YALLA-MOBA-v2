@@ -212,8 +212,8 @@ export const getHomePostsService = async (userId: number, limit = 10, offset = 0
       total: parseInt(countResult.rows[0].count, 10)
     };
   } catch (error) {
-    throw new Error("Failed to fetch home posts");
-  }
+  console.error(error);
+  throw error;  }
 };
 
 
