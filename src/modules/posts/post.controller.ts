@@ -171,11 +171,21 @@ export const getComments = async (req: Request, res: Response) => {
 
 export const getHomePosts = async (req: Request, res: Response) => {
   try {
+    // Get userId from JWT or session, depending on your auth setup
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) {
+      res.status(401).json({ error: "No token provided" });
+      return;
+    }
+
+    const decoded = jwt.verify(token, JWT_SECRET) as { userId: number };
+    const userId = decoded.userId;
+
     const page = parseInt(req.query.page as string) || 1;
     const pageSize = parseInt(req.query.pageSize as string) || 10;
     const offset = (page - 1) * pageSize;
 
-    const { posts, total } = await getHomePostsService(pageSize, offset);
+    const { posts, total } = await getHomePostsService(userId, pageSize, offset);
 
     res.status(200).json({
       posts,
@@ -188,7 +198,6 @@ export const getHomePosts = async (req: Request, res: Response) => {
     res.status(500).json({ error: error.message });
   }
 };
-
 
 export const getFeedPosts = async (req: Request, res: Response) => {
   const token = req.headers.authorization?.split(" ")[1];
