@@ -192,13 +192,13 @@ export const getHomePostsService = async (userId: number, limit = 10, offset = 0
         u.avatar,
         COUNT(DISTINCT l.id) AS "likeCount",
         COUNT(DISTINCT c.id) AS "commentCount",
-        CASE WHEN lu.id IS NOT NULL THEN TRUE ELSE FALSE END AS "likedByUser"
+        MAX(CASE WHEN lu.user_id IS NOT NULL THEN TRUE ELSE FALSE END) AS "likedByUser"
       FROM posts p
       JOIN users u ON p.user_id = u.id
       LEFT JOIN likes l ON p.id = l.post_id
       LEFT JOIN comments c ON p.id = c.post_id
       LEFT JOIN likes lu ON p.id = lu.post_id AND lu.user_id = $1
-      GROUP BY p.id, u.id, lu.id
+      GROUP BY p.id, u.id
       ORDER BY p.created_at DESC
       LIMIT $2 OFFSET $3
       `,
@@ -215,6 +215,8 @@ export const getHomePostsService = async (userId: number, limit = 10, offset = 0
     throw new Error("Failed to fetch home posts");
   }
 };
+
+
 export const getFeedPostsService = async (userId: number, limit = 10, offset = 0) => {
   try {
     const result = await pool.query(
