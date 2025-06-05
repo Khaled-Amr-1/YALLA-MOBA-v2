@@ -218,30 +218,30 @@ export const getHomePostsService = async (limit = 10, offset = 0) => {
 
 export const getFeedPostsService = async (userId: number, limit = 10, offset = 0) => {
   try {
-    // Get paginated feed posts
     const result = await pool.query(
       `
       SELECT 
         p.*,
         u.username,
         u.avatar,
-        COUNT(l.id) AS likeCount,
-        COUNT(c.id) AS commentCount
+        COUNT(DISTINCT l.id) AS "likeCount",
+        COUNT(DISTINCT c.id) AS "commentCount",
+        CASE WHEN lu.id IS NOT NULL THEN TRUE ELSE FALSE END AS "likedByUser"
       FROM posts p
       JOIN users u ON p.user_id = u.id
       LEFT JOIN likes l ON p.id = l.post_id
       LEFT JOIN comments c ON p.id = c.post_id
+      LEFT JOIN likes lu ON p.id = lu.post_id AND lu.user_id = $1
       WHERE p.user_id IN (
         SELECT following_id FROM follows WHERE follower_id = $1
       )
-      GROUP BY p.id, u.id
+      GROUP BY p.id, u.id, lu.id
       ORDER BY p.created_at DESC
       LIMIT $2 OFFSET $3
       `,
       [userId, limit, offset]
     );
 
-    // Get total count of feed posts
     const countResult = await pool.query(
       `
       SELECT COUNT(*) FROM posts 
