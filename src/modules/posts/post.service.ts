@@ -187,7 +187,12 @@ export const getHomePostsService = async (userId: number, limit = 10, offset = 0
 const result = await pool.query(
   `
   SELECT 
-    p.*,
+    p.id,
+    p.user_id,
+    p.body,
+    p.files,
+    p.created_at,
+    p.updated_at,
     u.username,
     u.avatar,
     COUNT(DISTINCT l.id) AS "likeCount",
@@ -198,7 +203,9 @@ const result = await pool.query(
   LEFT JOIN likes l ON p.id = l.post_id
   LEFT JOIN comments c ON p.id = c.post_id
   LEFT JOIN likes lu ON p.id = lu.post_id AND lu.user_id = $1
-  GROUP BY p.id, u.id
+  GROUP BY 
+    p.id, p.user_id, p.body, p.files, p.created_at, p.updated_at, 
+    u.username, u.avatar
   ORDER BY p.created_at DESC
   LIMIT $2 OFFSET $3
   `,
