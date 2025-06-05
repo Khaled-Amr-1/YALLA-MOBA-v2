@@ -182,9 +182,11 @@ export const getComments = async (postId: number) => {
   return result.rows;
 };
 
-export const getHomePostsService = async () => {
+export const getHomePostsService = async (limit = 10, offset = 0) => {
   try {
-    const result = await pool.query(`
+    // Get paginated posts
+    const result = await pool.query(
+      `
       SELECT 
         p.*,
         u.username,
@@ -197,8 +199,18 @@ export const getHomePostsService = async () => {
       LEFT JOIN comments c ON p.id = c.post_id
       GROUP BY p.id, u.id
       ORDER BY p.created_at DESC
-    `);
-    return result.rows;
+      LIMIT $1 OFFSET $2
+      `,
+      [limit, offset]
+    );
+
+    // Get total count of posts
+    const countResult = await pool.query(`SELECT COUNT(*) FROM posts`);
+
+    return {
+      posts: result.rows,
+      total: parseInt(countResult.rows[0].count, 10)
+    };
   } catch (error) {
     throw new Error("Failed to fetch home posts");
   }

@@ -171,12 +171,24 @@ export const getComments = async (req: Request, res: Response) => {
 
 export const getHomePosts = async (req: Request, res: Response) => {
   try {
-    const posts = await getHomePostsService();
-    res.status(200).json(posts);
+    const page = parseInt(req.query.page as string) || 1;
+    const pageSize = parseInt(req.query.pageSize as string) || 10;
+    const offset = (page - 1) * pageSize;
+
+    const { posts, total } = await getHomePostsService(pageSize, offset);
+
+    res.status(200).json({
+      posts,
+      total,
+      totalPages: Math.ceil(total / pageSize),
+      currentPage: page,
+      pageSize
+    });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 export const getFeedPosts = async (req: Request, res: Response) => {
   const token = req.headers.authorization?.split(" ")[1];
