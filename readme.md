@@ -396,37 +396,58 @@ same as home
 
 ```json
 {
-    [
+    "posts": [
         {
-            "id": 130,
+            "id": 147,
             "user_id": 3,
-            "body": "وبز",
+            "body": "New one",
             "files": [
-                "https://res.cloudinary.com/dqtn6fmjs/image/upload/v1748500110/posts/njpoccdoik534gpupvwf.jpg"
+                "https://res.cloudinary.com/dqtn6fmjs/image/upload/v1748529540/posts/bzffiplymr1pk3g19qaw.jpg"
             ],
-            "created_at": "2025-05-29T06:28:31.897Z",
-            "updated_at": "2025-05-29T06:28:31.897Z",
-            "likecount": "0",
-            "commentcount": "0",
-            "likedbyuser": false,
+            "created_at": "2025-05-29T14:39:01.252Z",
+            "updated_at": "2025-06-05T20:51:50.637Z",
+            "likecount": 3,
+            "commentcount": 1,
             "username": "Hookxx",
-            "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1mGcwK1Doj36_tYvBW0rHUoTk_EBZ4IQWHg&s"
+            "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1mGcwK1Doj36_tYvBW0rHUoTk_EBZ4IQWHg&s",
+            "likeCount": "3",
+            "commentCount": "1",
+            "likedByUser": true
         },
         {
-            "id": 129,
+            "id": 134,
             "user_id": 3,
-            "body": "ؤتين",
+            "body": "Video 📷",
             "files": [
-                "https://res.cloudinary.com/dqtn6fmjs/image/upload/v1748499989/posts/drhdl2fpgrceckgscdyy.jpg"
+                "https://res.cloudinary.com/dqtn6fmjs/video/upload/v1748508019/posts/l7rgxe7phzdaivremby2.mp4"
             ],
-            "created_at": "2025-05-29T06:26:30.650Z",
-            "updated_at": "2025-05-29T06:26:30.650Z",
-            "likecount": "0",
-            "commentcount": "0",
-            "likedbyuser": false,
+            "created_at": "2025-05-29T08:40:21.342Z",
+            "updated_at": "2025-05-29T08:40:21.342Z",
+            "likecount": 0,
+            "commentcount": 0,
             "username": "Hookxx",
-            "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1mGcwK1Doj36_tYvBW0rHUoTk_EBZ4IQWHg&s"
-        }
+            "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1mGcwK1Doj36_tYvBW0rHUoTk_EBZ4IQWHg&s",
+            "likeCount": "0",
+            "commentCount": "0",
+            "likedByUser": false
+        },
+        {
+            "id": 133,
+            "user_id": 3,
+            "body": "Qr code",
+            "files": [
+                "https://res.cloudinary.com/dqtn6fmjs/image/upload/v1748504855/posts/qyugxxzg6qn7bmsjsesq.png"
+            ],
+            "created_at": "2025-05-29T07:47:35.934Z",
+            "updated_at": "2025-05-29T07:47:35.934Z",
+            "likecount": 0,
+            "commentcount": 0,
+            "username": "Hookxx",
+            "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1mGcwK1Doj36_tYvBW0rHUoTk_EBZ4IQWHg&s",
+            "likeCount": "0",
+            "commentCount": "0",
+            "likedByUser": false
+        },
     ],
     "total": 42,
     "totalPages": 5,
