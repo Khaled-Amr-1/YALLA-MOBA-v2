@@ -335,8 +335,53 @@ Delete a specific comment from a post.
 
 ### 🏠 Home Feed
 
-**GET** `/posts/home/`  
-Get the home feed (e.g., trending or general posts).
+**GET** `/posts/home?page=1&pageSize=10`  
+Get the home feed 
+page is the page you want and page size how many posts will you get in the responce
+
+
+#### GET Response
+
+```json
+{
+    [
+       {
+            "id": 129,
+            "user_id": 3,
+            "body": "ؤتين",
+            "files": [
+                "https://res.cloudinary.com/dqtn6fmjs/image/upload/v1748499989/posts/drhdl2fpgrceckgscdyy.jpg"
+            ],
+            "created_at": "2025-05-29T06:26:30.650Z",
+            "updated_at": "2025-05-29T06:26:30.650Z",
+            "likecount": "0",
+            "commentcount": "0",
+            "likedbyuser": false,
+            "username": "Hookxx",
+            "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1mGcwK1Doj36_tYvBW0rHUoTk_EBZ4IQWHg&s"
+        },
+        {
+            "id": 128,
+            "user_id": 3,
+            "body": "لااا",
+            "files": [
+                "https://res.cloudinary.com/dqtn6fmjs/video/upload/v1748495538/posts/cnab7fw1t1ocforai50a.mp4"
+            ],
+            "created_at": "2025-05-29T05:12:19.331Z",
+            "updated_at": "2025-05-29T05:12:19.331Z",
+            "likecount": "0",
+            "commentcount": "0",
+            "likedbyuser": false,
+            "username": "Hookxx",
+            "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1mGcwK1Doj36_tYvBW0rHUoTk_EBZ4IQWHg&s"
+        }
+    ],
+    "total": 73,
+    "totalPages": 8,
+    "currentPage": 2,
+    "pageSize": 10
+}
+```
 
 ---
 

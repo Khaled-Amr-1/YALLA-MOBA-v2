@@ -216,9 +216,11 @@ export const getHomePostsService = async (limit = 10, offset = 0) => {
   }
 };
 
-export const getFeedPostsService = async (userId: number) => {
+export const getFeedPostsService = async (userId: number, limit = 10, offset = 0) => {
   try {
-    const result = await pool.query(`
+    // Get paginated feed posts
+    const result = await pool.query(
+      `
       SELECT 
         p.*,
         u.username,
@@ -234,8 +236,26 @@ export const getFeedPostsService = async (userId: number) => {
       )
       GROUP BY p.id, u.id
       ORDER BY p.created_at DESC
-    `, [userId]);
-    return result.rows;
+      LIMIT $2 OFFSET $3
+      `,
+      [userId, limit, offset]
+    );
+
+    // Get total count of feed posts
+    const countResult = await pool.query(
+      `
+      SELECT COUNT(*) FROM posts 
+      WHERE user_id IN (
+        SELECT following_id FROM follows WHERE follower_id = $1
+      )
+      `,
+      [userId]
+    );
+
+    return {
+      posts: result.rows,
+      total: parseInt(countResult.rows[0].count, 10)
+    };
   } catch (error) {
     throw new Error("Failed to fetch feed posts");
   }

@@ -199,8 +199,20 @@ export const getFeedPosts = async (req: Request, res: Response) => {
   try {
     const decoded = jwt.verify(token, JWT_SECRET) as { userId: number };
     const userId = decoded.userId;
-    const posts = await getFeedPostsService(userId);
-    res.status(200).json(posts);
+
+    const page = parseInt(req.query.page as string) || 1;
+    const pageSize = parseInt(req.query.pageSize as string) || 10;
+    const offset = (page - 1) * pageSize;
+
+    const { posts, total } = await getFeedPostsService(userId, pageSize, offset);
+
+    res.status(200).json({
+      posts,
+      total,
+      totalPages: Math.ceil(total / pageSize),
+      currentPage: page,
+      pageSize
+    });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }
