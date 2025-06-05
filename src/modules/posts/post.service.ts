@@ -184,26 +184,26 @@ export const getComments = async (postId: number) => {
 
 export const getHomePostsService = async (userId: number, limit = 10, offset = 0) => {
   try {
-    const result = await pool.query(
-      `
-      SELECT 
-        p.*,
-        u.username,
-        u.avatar,
-        COUNT(DISTINCT l.id) AS "likeCount",
-        COUNT(DISTINCT c.id) AS "commentCount",
-        MAX(CASE WHEN lu.user_id IS NOT NULL THEN TRUE ELSE FALSE END) AS "likedByUser"
-      FROM posts p
-      JOIN users u ON p.user_id = u.id
-      LEFT JOIN likes l ON p.id = l.post_id
-      LEFT JOIN comments c ON p.id = c.post_id
-      LEFT JOIN likes lu ON p.id = lu.post_id AND lu.user_id = $1
-      GROUP BY p.id, u.id
-      ORDER BY p.created_at DESC
-      LIMIT $2 OFFSET $3
-      `,
-      [userId, limit, offset]
-    );
+const result = await pool.query(
+  `
+  SELECT 
+    p.*,
+    u.username,
+    u.avatar,
+    COUNT(DISTINCT l.id) AS "likeCount",
+    COUNT(DISTINCT c.id) AS "commentCount",
+    MAX(CASE WHEN lu.id IS NOT NULL THEN 1 ELSE 0 END)::boolean AS "likedByUser"
+  FROM posts p
+  JOIN users u ON p.user_id = u.id
+  LEFT JOIN likes l ON p.id = l.post_id
+  LEFT JOIN comments c ON p.id = c.post_id
+  LEFT JOIN likes lu ON p.id = lu.post_id AND lu.user_id = $1
+  GROUP BY p.id, u.id
+  ORDER BY p.created_at DESC
+  LIMIT $2 OFFSET $3
+  `,
+  [userId, limit, offset]
+);
 
     const countResult = await pool.query(`SELECT COUNT(*) FROM posts`);
 
