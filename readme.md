@@ -344,42 +344,83 @@ page is the page you want and page size how many posts will you get in the respo
 
 ```json
 {
-    [
-       {
-            "id": 129,
+    "posts": [
+        {
+            "id": 147,
             "user_id": 3,
-            "body": "ؤتين",
+            "body": "New one",
             "files": [
-                "https://res.cloudinary.com/dqtn6fmjs/image/upload/v1748499989/posts/drhdl2fpgrceckgscdyy.jpg"
+                "https://res.cloudinary.com/dqtn6fmjs/image/upload/v1748529540/posts/bzffiplymr1pk3g19qaw.jpg"
             ],
-            "created_at": "2025-05-29T06:26:30.650Z",
-            "updated_at": "2025-05-29T06:26:30.650Z",
-            "likecount": "0",
-            "commentcount": "0",
-            "likedbyuser": false,
+            "created_at": "2025-05-29T14:39:01.252Z",
+            "updated_at": "2025-06-05T20:51:50.637Z",
             "username": "Hookxx",
-            "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1mGcwK1Doj36_tYvBW0rHUoTk_EBZ4IQWHg&s"
+            "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1mGcwK1Doj36_tYvBW0rHUoTk_EBZ4IQWHg&s",
+            "likeCount": "3",
+            "commentCount": "1",
+            "likedByUser": true
         },
         {
-            "id": 128,
+            "id": 146,
             "user_id": 3,
-            "body": "لااا",
+            "body": "Tesr",
             "files": [
-                "https://res.cloudinary.com/dqtn6fmjs/video/upload/v1748495538/posts/cnab7fw1t1ocforai50a.mp4"
+                "https://res.cloudinary.com/dqtn6fmjs/video/upload/v1748527458/posts/tjgb3vbi56kx8r1fldzy.mp4"
             ],
-            "created_at": "2025-05-29T05:12:19.331Z",
-            "updated_at": "2025-05-29T05:12:19.331Z",
-            "likecount": "0",
-            "commentcount": "0",
-            "likedbyuser": false,
+            "created_at": "2025-05-29T14:04:20.164Z",
+            "updated_at": "2025-05-29T14:04:20.164Z",
             "username": "Hookxx",
-            "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1mGcwK1Doj36_tYvBW0rHUoTk_EBZ4IQWHg&s"
+            "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1mGcwK1Doj36_tYvBW0rHUoTk_EBZ4IQWHg&s",
+            "likeCount": "0",
+            "commentCount": "0",
+            "likedByUser": false
+        },
+        {
+            "id": 145,
+            "user_id": 69,
+            "body": "",
+            "files": [
+                "https://res.cloudinary.com/dqtn6fmjs/image/upload/v1748523233/posts/tzckxdn0uvdvxd4rwvgm.png"
+            ],
+            "created_at": "2025-05-29T12:53:54.986Z",
+            "updated_at": "2025-05-29T12:53:54.986Z",
+            "username": "testuser12",
+            "avatar": "https://google.com/avatr.com",
+            "likeCount": "0",
+            "commentCount": "0",
+            "likedByUser": false
+        },
+        {
+            "id": 144,
+            "user_id": 69,
+            "body": "",
+            "files": [],
+            "created_at": "2025-05-29T12:50:26.844Z",
+            "updated_at": "2025-05-29T12:50:26.844Z",
+            "username": "testuser12",
+            "avatar": "https://google.com/avatr.com",
+            "likeCount": "0",
+            "commentCount": "0",
+            "likedByUser": false
+        },
+        {
+            "id": 143,
+            "user_id": 69,
+            "body": "",
+            "files": [],
+            "created_at": "2025-05-29T12:41:52.134Z",
+            "updated_at": "2025-05-29T12:41:52.134Z",
+            "username": "testuser12",
+            "avatar": "https://google.com/avatr.com",
+            "likeCount": "0",
+            "commentCount": "0",
+            "likedByUser": false
         }
     ],
     "total": 73,
-    "totalPages": 8,
-    "currentPage": 2,
-    "pageSize": 10
+    "totalPages": 15,
+    "currentPage": 1,
+    "pageSize": 5
 }
 ```
 
