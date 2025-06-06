@@ -187,8 +187,10 @@ Returns the list of users that the specified user is following.
 ]
 ```
 
-**GET** `/profiles/:uid/`  
+**GET** `/profiles/:uid?page=1&pageSize=5`  
 Fetch profile data by user UID.
+with pagination 
+
 
 #### GET Response
 ```json
@@ -201,7 +203,7 @@ Fetch profile data by user UID.
         "uid": "1000001",
         "popularity": "0",
         "suspended": false,
-        "followingcount": 1,
+        "followingcount": 2,
         "followerscount": 0
     },
     "ownerPosts": [
@@ -225,7 +227,40 @@ Fetch profile data by user UID.
             "likecount": 0,
             "commentcount": 0
         },
-    ]
+        {
+            "id": 80,
+            "body": "asdfghjkl",
+            "files": [
+                "https://res.cloudinary.com/dqtn6fmjs/image/upload/v1746653815/posts/uvxmqdkf1asvyowf3ypk.png"
+            ],
+            "created_at": "2025-05-07T20:17:10.502Z",
+            "updated_at": "2025-05-07T23:58:39.756Z",
+            "likecount": 0,
+            "commentcount": 3
+        },
+        {
+            "id": 52,
+            "body": "heli",
+            "files": [],
+            "created_at": "2025-05-05T11:08:40.520Z",
+            "updated_at": "2025-05-07T23:58:39.756Z",
+            "likecount": 0,
+            "commentcount": 0
+        },
+        {
+            "id": 51,
+            "body": "heli",
+            "files": [],
+            "created_at": "2025-05-05T11:08:40.424Z",
+            "updated_at": "2025-05-07T23:58:39.756Z",
+            "likecount": 0,
+            "commentcount": 0
+        }
+    ],
+    "total": 24,
+    "totalPages": 5,
+    "currentPage": 1,
+    "pageSize": 5
 }
 ```
 
