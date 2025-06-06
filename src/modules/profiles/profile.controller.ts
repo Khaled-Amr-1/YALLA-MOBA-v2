@@ -44,9 +44,21 @@ export const getUserProfile = async (
       return;
     }
 
-    const { user, posts } = await getUserWithPosts(parsedUid);
+    const page = parseInt(req.query.page as string, 10) || 1;
+    const limit = parseInt(req.query.limit as string, 10) || 5;
 
-    res.status(200).json({ ownerData: user, ownerPosts: posts });
+    const { user, posts, totalPosts } = await getUserWithPosts(parsedUid, page, limit);
+
+    res.status(200).json({
+      ownerData: user,
+      ownerPosts: posts,
+      pagination: {
+        page,
+        limit,
+        totalPosts,
+        totalPages: Math.ceil(totalPosts / limit),
+      },
+    });
     return;
   } catch (error) {
     next(error);

@@ -7,7 +7,7 @@ import { searchUser } from "./profile.controller";
 
 const router = Router();
 
-router.get("/:uid", authenticateToken, getUserProfile); // still supports public profile viewing
+router.get("/:uid", authenticateToken, getUserProfile); 
 router.post("/search", authenticateToken, searchUser);
 
 router.patch("/", authenticateToken, validateSchema(updateProfileSchema), updateUserProfile); // ✅ validation هنا

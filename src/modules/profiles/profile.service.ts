@@ -1,9 +1,14 @@
 import pool from "../../config/db";
 
 // Used in GET profile
-export const getUserWithPosts = async (uid: number) => {
+export const getUserWithPosts = async (
+  uid: number,
+  page: number = 1,
+  limit: number = 5
+) => {
   const userResult = await pool.query(
-    `SELECT id, username, gender, role, avatar, uid, popularity , suspended, followingcount, followerscount FROM users WHERE uid = $1`,
+    `SELECT id, username, gender, role, avatar, uid, popularity, suspended, followingcount, followerscount 
+     FROM users WHERE uid = $1`,
     [uid]
   );
 
@@ -13,14 +18,27 @@ export const getUserWithPosts = async (uid: number) => {
 
   const user = userResult.rows[0];
 
-  const postsResult = await pool.query(
-    `SELECT id, body, files, created_at, updated_at, likecount, commentcount FROM posts WHERE user_id = $1 ORDER BY created_at DESC`,
+  // Count total posts for pagination
+  const countResult = await pool.query(
+    `SELECT COUNT(*) FROM posts WHERE user_id = $1`,
     [user.id]
+  );
+  const totalPosts = parseInt(countResult.rows[0].count, 10);
+
+  // Pagination computation
+  const offset = (page - 1) * limit;
+
+  const postsResult = await pool.query(
+    `SELECT id, body, files, created_at, updated_at, likecount, commentcount 
+     FROM posts WHERE user_id = $1 
+     ORDER BY created_at DESC
+     LIMIT $2 OFFSET $3`,
+    [user.id, limit, offset]
   );
 
   delete user.id;
 
-  return { user, posts: postsResult.rows };
+  return { user, posts: postsResult.rows, totalPosts };
 };
 
 // Used in PATCH profile
