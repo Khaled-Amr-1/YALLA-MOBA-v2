@@ -182,7 +182,7 @@ export const getComments = async (postId: number) => {
   return result.rows;
 };
 
-export const getHomePostsService = async (userId: number, limit = 10, offset = 0) => {
+export const getHomePostsService = async (userId: number, limit = 5, offset = 0) => {
   try {
 const result = await pool.query(
   `
@@ -224,7 +224,7 @@ const result = await pool.query(
 };
 
 
-export const getFeedPostsService = async (userId: number, limit = 10, offset = 0) => {
+export const getFeedPostsService = async (userId: number, limit = 5, offset = 0) => {
   try {
     const result = await pool.query(
       `

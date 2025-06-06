@@ -182,7 +182,7 @@ export const getHomePosts = async (req: Request, res: Response) => {
     const userId = decoded.userId;
 
     const page = parseInt(req.query.page as string) || 1;
-    const pageSize = parseInt(req.query.pageSize as string) || 10;
+    const pageSize = parseInt(req.query.pageSize as string) || 5;
     const offset = (page - 1) * pageSize;
 
     const { posts, total } = await getHomePostsService(userId, pageSize, offset);
@@ -210,7 +210,7 @@ export const getFeedPosts = async (req: Request, res: Response) => {
     const userId = decoded.userId;
 
     const page = parseInt(req.query.page as string) || 1;
-    const pageSize = parseInt(req.query.pageSize as string) || 10;
+    const pageSize = parseInt(req.query.pageSize as string) || 5;
     const offset = (page - 1) * pageSize;
 
     const { posts, total } = await getFeedPostsService(userId, pageSize, offset);
