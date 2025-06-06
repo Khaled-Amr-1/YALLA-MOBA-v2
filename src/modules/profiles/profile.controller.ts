@@ -44,20 +44,19 @@ export const getUserProfile = async (
       return;
     }
 
+    // Use page and pageSize query params
     const page = parseInt(req.query.page as string, 10) || 1;
-    const limit = parseInt(req.query.limit as string, 10) || 5;
+    const pageSize = parseInt(req.query.pageSize as string, 10) || 5;
 
-    const { user, posts, totalPosts } = await getUserWithPosts(parsedUid, page, limit);
+    const { user, posts, totalPosts } = await getUserWithPosts(parsedUid, page, pageSize);
 
     res.status(200).json({
       ownerData: user,
       ownerPosts: posts,
-      pagination: {
-        page,
-        limit,
-        totalPosts,
-        totalPages: Math.ceil(totalPosts / limit),
-      },
+      total: totalPosts,
+      totalPages: Math.ceil(totalPosts / pageSize),
+      currentPage: page,
+      pageSize: pageSize,
     });
     return;
   } catch (error) {

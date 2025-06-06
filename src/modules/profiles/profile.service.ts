@@ -4,7 +4,7 @@ import pool from "../../config/db";
 export const getUserWithPosts = async (
   uid: number,
   page: number = 1,
-  limit: number = 5
+  pageSize: number = 5
 ) => {
   const userResult = await pool.query(
     `SELECT id, username, gender, role, avatar, uid, popularity, suspended, followingcount, followerscount 
@@ -26,14 +26,14 @@ export const getUserWithPosts = async (
   const totalPosts = parseInt(countResult.rows[0].count, 10);
 
   // Pagination computation
-  const offset = (page - 1) * limit;
+  const offset = (page - 1) * pageSize;
 
   const postsResult = await pool.query(
     `SELECT id, body, files, created_at, updated_at, likecount, commentcount 
      FROM posts WHERE user_id = $1 
      ORDER BY created_at DESC
      LIMIT $2 OFFSET $3`,
-    [user.id, limit, offset]
+    [user.id, pageSize, offset]
   );
 
   delete user.id;
